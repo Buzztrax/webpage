@@ -93,13 +93,13 @@ function cll_is_user_active() {
 function cll_users_manage_columns( $empty, $column_name, $userid) {
 	$user_data = get_userdata( $userid );
 	if ( $column_name == 'registration_date' ) {
-		return date( "j.n. Y G:i", strtotime($user_data->user_registered) );
+		return date( "Y.m.d H:i", strtotime($user_data->user_registered) );
 	} elseif( $column_name == 'last_user_login' ) {
 		$last_user_login = get_user_meta( $userid, 'last_user_login', TRUE );
 		if ( ($last_user_login && $last_user_login == 'No login') || !$last_user_login ) {
 			return 'No login';
 		} elseif ( $last_user_login ) {
-			return date( "j.n. Y G:i", $last_user_login );
+			return date( "Y.m.d H:i", $last_user_login );
 		}
 	}
 }
@@ -112,3 +112,29 @@ function cll_users_edit_columns($columns) {
 }
 // add custom columns
 add_filter( 'manage_users_columns', 'cll_users_edit_columns');
+
+function cll_users_sort_columns($columns) {
+		$columns['registration_date'] = 'user_registered';
+		$columns['last_user_login'] = 'last_user_login';
+		return $columns;
+}
+// make it sortable
+add_filter( 'manage_users_sortable_columns', 'cll_users_sort_columns' );
+
+function custom_column_orderby( $vars ) {
+	if ( isset( $vars['orderby'] )) {
+                if ('user_registered' == $vars['orderby'] ) {
+		        $vars = array_merge( $vars, array(
+			        'meta_key' => 'user_registered',
+			        'orderby' => 'meta_value'
+		        ) );
+                } elseif ('last_user_login' == $vars['orderby'] ) {
+		        $vars = array_merge( $vars, array(
+			        'meta_key' => 'last_user_login',
+			        'orderby' => 'meta_value'
+		        ) );
+                }
+	}
+	return $vars;
+}
+add_filter( 'request', 'custom_column_orderby' );
