@@ -91,8 +91,8 @@ function cll_is_user_active() {
 }
 
 function cll_users_manage_columns( $empty, $column_name, $userid) {
-	$user_data = get_userdata( $userid );
 	if ( $column_name == 'registration_date' ) {
+	  $user_data = get_userdata( $userid );
 		return date( "Y.m.d H:i", strtotime($user_data->user_registered) );
 	} elseif( $column_name == 'last_user_login' ) {
 		$last_user_login = get_user_meta( $userid, 'last_user_login', TRUE );
@@ -122,7 +122,7 @@ function cll_users_sort_columns($columns) {
 add_filter( 'manage_users_sortable_columns', 'cll_users_sort_columns' );
 
 function custom_column_orderby( $vars ) {
-	if ( isset( $vars['orderby'] )) {
+	  if ( isset( $vars['orderby'] )) {
                 if ('user_registered' == $vars['orderby'] ) {
 		        $vars = array_merge( $vars, array(
 			        'meta_key' => 'user_registered',
@@ -133,7 +133,7 @@ function custom_column_orderby( $vars ) {
 			        'meta_key' => 'last_user_login',
 			        'orderby' => 'meta_value'
 		        ) );
-                }
+      }
 	}
 	return $vars;
 }
