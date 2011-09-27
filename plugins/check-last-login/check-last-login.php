@@ -72,8 +72,8 @@ function cll_registration_login($user_ID) {
 add_action('user_register', 'cll_registration_login');
 
 function cll_last_user_login($login) {
-    $user = get_userdatabylogin($login);
-    update_user_meta( $user->ID, 'last_user_login', time() );
+  $user = get_userdatabylogin($login);
+  update_user_meta( $user->ID, 'last_user_login', time() );
 }
 add_action('wp_login','cll_last_user_login');
 
@@ -106,35 +106,35 @@ function cll_users_manage_columns( $empty, $column_name, $userid) {
 add_filter( 'manage_users_custom_column', 'cll_users_manage_columns', 10, 3);
 
 function cll_users_edit_columns($columns) {
-		$columns['registration_date'] = 'Registered';
-		$columns['last_user_login'] = 'Last log in';
-		return $columns;
+  $columns['registration_date'] = 'Registered';
+  $columns['last_user_login'] = 'Last log in';
+  return $columns;
 }
 // add custom columns
 add_filter( 'manage_users_columns', 'cll_users_edit_columns');
 
 function cll_users_sort_columns($columns) {
-		$columns['registration_date'] = 'user_registered';
-		$columns['last_user_login'] = 'last_user_login';
-		return $columns;
+  $columns['registration_date'] = 'user_registered';
+  $columns['last_user_login'] = 'last_user_login';
+  return $columns;
 }
 // make it sortable
 add_filter( 'manage_users_sortable_columns', 'cll_users_sort_columns' );
 
 function custom_column_orderby( $vars ) {
-	  if ( isset( $vars['orderby'] )) {
-                if ('user_registered' == $vars['orderby'] ) {
-		        $vars = array_merge( $vars, array(
-			        'meta_key' => 'user_registered',
-			        'orderby' => 'meta_value'
-		        ) );
-                } elseif ('last_user_login' == $vars['orderby'] ) {
-		        $vars = array_merge( $vars, array(
-			        'meta_key' => 'last_user_login',
-			        'orderby' => 'meta_value'
-		        ) );
-      }
-	}
-	return $vars;
+  if ( isset( $vars['orderby'] )) {
+    if ('user_registered' == $vars['orderby'] ) {
+      $vars = array_merge( $vars, array(
+        'meta_key' => 'user_registered',
+        'orderby' => 'meta_value'
+        ) );
+    } elseif ('last_user_login' == $vars['orderby'] ) {
+      $vars = array_merge( $vars, array(
+        'meta_key' => 'last_user_login',
+        'orderby' => 'meta_value'
+        ) );
+    }
+  }
+  return $vars;
 }
 add_filter( 'request', 'custom_column_orderby' );
