@@ -1,0 +1,12 @@
+#it-footer {
+	text-align: center;
+	font-size:10px;
+}
+.strike {
+	text-decoration: line-through;
+}
+#respond select, #respond option {
+	margin:0px 0px 9px;
+	width:98%;
+	font-size:16px;
+}
