@@ -6,3 +6,12 @@ function toggle_star(issue_id) {
 		star.attr('src', new_src)
 	});
 }
+
+jQuery(document).ready( function() {
+	jQuery('.show_completed').toggle();
+	jQuery('.show_completed, .hide_completed').live('click', function(event) {
+		jQuery('.show_completed, .hide_completed').toggle();
+		jQuery('.tr_strike').toggle(500);
+		return false;
+	});
+});

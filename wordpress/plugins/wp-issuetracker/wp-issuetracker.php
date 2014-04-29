@@ -95,7 +95,7 @@ function it_main_settings() {
 				?>
 				<tr valign="top"> 
 					<td class="dragger"></td>
-					<td><input name="status_names[<?php echo $status->status_id?>]" type="text" id="" value="<?php echo stripslashes($status->status_name) ?>" /><input name="status_colours[<?php echo $status->status_id?>]" type="text" id="" value="<?php echo $status->status_colour ?>" /> <input type="checkbox" name="status_strikes[<?php echo $status->status_id?>]" <?php echo $status->status_strike ? 'checked' : ''?>> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
+					<td><input name="status_names[<?php echo $status->status_id?>]" type="text" id="" value="<?php echo stripslashes($status->status_name) ?>" /><input name="status_colours[<?php echo $status->status_id?>]" type="text" id="" value="<?php echo $status->status_colour ?>" /> <input type="checkbox" name="status_strikes[<?php echo $status->status_id?>]" <?php echo $status->status_strike ? 'checked' : ''?> title="closed item?"> <a onclick="jQuery(this).parent().parent().remove(); return false;" href="">delete</a></td> 
 				</tr>	
 				<?php
 			}
@@ -624,6 +624,8 @@ STAR;
 			padding: 10px;
 		}
 	</style>
+	<a class="show_completed" href="/">Show Completed Issues</a>
+	<a class="hide_completed" href="/">Hide Completed Issues</a>
 	<table id="wp-issuetracker-$tracker_id" class="wp-issuetracker">
 		<tr>
 			<th style="width:1%;">ID</th>
@@ -648,7 +650,7 @@ HTML;
 	<td><a title="Click to toggle star" href="javascript:toggle_star({$issue->issue_id})"><img id="star_{$issue->issue_id}" src="{$plugin_url}star_{$onoff}.gif" /></a></td>	
 STAR;
 		$content .= <<<HTML
-		<tr style="background:#{$issue->status_colour};" >
+		<tr class="tr_$strike" style="background:#{$issue->status_colour};" >
 			<td>{$issue->issue_id}</td>
 			<td class="$strike"><a href="$url">{$issue->issue_summary}</a></td>
 			<td style="background:#{$issue->type_colour};">{$issue->type_name}</td>
@@ -684,7 +686,7 @@ function announce_change_to_stars($comment, $issue_id) {
 	foreach ($users as $user) {
 		wp_mail($user->user_email, 
 			'[WP-IT] Changes to issue #'.$issue_id, 
-			'<p>New comment by '.$poster->display_name.'</p>'.$comment . '<p>Click here to go to the issue: '.build_url('do=view_issue&issue='.$issue_id, (int) get_request('post_id')).'</p><p>-- Powered by WP-IssueTracker</p>',
+			'<p>New comment by '.$poster->display_name.'</p>'.$comment . '<p>Click here to go to the issue: <a href="'.build_url('do=view_issue&issue='.$issue_id, (int) get_request('post_id')).'">'.build_url('do=view_issue&issue='.$issue_id, (int) get_request('post_id')).'</a></p><p>-- Powered by WP-IssueTracker</p>',
 			$headers);
 	}
 }

@@ -5,6 +5,9 @@
 .strike {
 	text-decoration: line-through;
 }
+.tr_strike, .hide_completed, .show_completed {
+	display:none;
+}
 #respond select, #respond option {
 	margin:0px 0px 9px;
 	width:98%;
