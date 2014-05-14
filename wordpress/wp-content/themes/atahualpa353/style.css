@@ -1,0 +1,24 @@
+/*
+Theme Name: Atahualpa
+Theme URI: http://wordpress.bytesforall.com/
+Description: New WP 3 menu system now integrated. Style export/import feature (different format than 3.5.1, visit author site for conversion tool). Over 200 settings, up to 4 sidebars, fixed or flexible width layout, custom widget areas, drop down menus, SEO features, rotating header images, active user forum.  
+Version: 3.5.3
+Author: BytesForAll
+Author URI: http://forum.bytesforall.com/
+Tags: white, one-column, two-columns, three-columns, four-columns, fixed-width, flexible-width, custom-colors, custom-header, theme-options, left-sidebar, right-sidebar, threaded-comments, sticky-post, translation-ready
+*/
+ 
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+.alignleft {
+	float: left;
+	}
+
+.alignright {
+	float: right;
+	}
+	
