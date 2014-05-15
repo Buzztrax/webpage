@@ -1,0 +1,7 @@
+
+# first ignore everything
+*
+
+# then whitelist what's needed
+!/wordpress/wp-content/plugins/check-last-login 
+!/wordpress/wp-content/plugins/wp-issuetracker
