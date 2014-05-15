@@ -3,5 +3,8 @@
 *
 
 # then whitelist what's needed
-!/wordpress/wp-content/plugins/check-last-login 
-!/wordpress/wp-content/plugins/wp-issuetracker
+!*/
+!.gitignore
+!wordpress/wp-content/plugins/check-last-login/*
+!wordpress/wp-content/plugins/wp-issuetracker/*
+!mediawiki/extensions/single-signon/*
