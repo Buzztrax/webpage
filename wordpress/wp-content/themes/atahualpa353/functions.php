@@ -788,7 +788,6 @@ add_action( 'init', 'register_new_menus' );
 	}
 }
 ?>
-
 <?php
 ######################################### CUSTOM FUNCTIONS #############################################
 
@@ -813,16 +812,6 @@ function mingle_register_redirect() {
 //add_action('init', 'mingle_register_redirect');
 
 // Redirect function ////////////////////////////////////////////////////////
-function mingle_logout_redirect() {
-        if (strpos($_SERVER['REQUEST_URI'], 'wp-login.php?loggedout=true') !== false ) {
-                $url = '' . get_bloginfo( 'url' ) . '/';
-                wp_redirect($url);
-                exit;
-        }
-}
-add_action('init', 'mingle_logout_redirect');
-
-// Redirect function ////////////////////////////////////////////////////////
 function mingle_login_redirect() {
         $uri = $_SERVER['REQUEST_URI'];
         $uri = substr($uri, -12); // Get the last 12 characters of the URI (length of "wp-login.php" is 12)
@@ -843,4 +832,14 @@ function mingle_profile_redirect() {
         }
 }
 add_action('init', 'mingle_profile_redirect');
+
+// Redirect function ////////////////////////////////////////////////////////
+function mingle_logout_redirect() {
+        if (strpos($_SERVER['REQUEST_URI'], 'wp-login.php?loggedout=true') !== false ) {
+                $url = '' . get_bloginfo( 'url' ) . '/';
+                wp_redirect($url);
+                exit;
+        }
+}
+add_action('init', 'mingle_logout_redirect');
 ?>

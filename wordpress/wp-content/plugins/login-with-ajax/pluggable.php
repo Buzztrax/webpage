@@ -10,7 +10,6 @@ if ( !function_exists('wp_new_user_notification') ) :
  * @param string $plaintext_pass Optional. The user's plaintext password
  */
 function wp_new_user_notification($user_id, $plaintext_pass = '') {
-	global $LoginWithAjax;
 	
 	//Copied out of /wp-includes/pluggable.php
 	$user = new WP_User($user_id);
@@ -32,9 +31,9 @@ function wp_new_user_notification($user_id, $plaintext_pass = '') {
 		return;
 			
 	//LWA Customizations
-	if ( $LoginWithAjax->data['notification_override'] == true ) {
+	if ( !empty(LoginWithAjax::$data['notification_override']) ) {
 		//We can use our own logic here
-		$LoginWithAjax->new_user_notification($user_login, $plaintext_pass, $user_email, $blogname);
+		LoginWithAjax::new_user_notification($user_login, $plaintext_pass, $user_email, $blogname);
 	}else{
 		//Copied out of /wp-includes/pluggable.php
 		$message  = sprintf(__('Username: %s'), $user_login) . "\r\n";

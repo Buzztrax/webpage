@@ -5,121 +5,94 @@
  * The location from within your template folder is plugins/login-with-ajax/ (create these directories if they don't exist)
 */
 ?>
-<?php
-	if( $is_widget ){
-		echo $before_widget . $before_title . '<span id="LoginWithAjax_Title">' . __('Log In') . '</span>' . $after_title;
-	}
-?>
-	<div id="LoginWithAjax" class="default"><?php //ID must be here, and if this is a template, class name should be that of template directory ?>
-        <span id="LoginWithAjax_Status"></span>
-        <form name="LoginWithAjax_Form" id="LoginWithAjax_Form" action="<?php echo $this->url_login; ?>" method="post">
-            <table width='100%' cellspacing="0" cellpadding="0">
-                <tr id="LoginWithAjax_Username">
-                    <td class="username_label">
-                        <label><?php _e( 'Username' ) ?></label>
+	<div class="lwa lwa-default"><?php //class must be here, and if this is a template, class name should be that of template directory ?>
+        <form class="lwa-form" action="<?php echo esc_attr(LoginWithAjax::$url_login); ?>" method="post">
+        	<span class="lwa-status"></span>
+            <table>
+                <tr class="lwa-username">
+                    <td class="lwa-username-label">
+                        <label><?php esc_html_e( 'Username','login-with-ajax' ) ?></label>
                     </td>
-                    <td class="username_input">
-                        <input type="text" name="log" id="lwa_user_login" class="input" value="<?php echo attribute_escape(stripslashes($user_login)); ?>" />
+                    <td class="lwa-username-input">
+                        <input type="text" name="log" />
                     </td>
                 </tr>
-                <tr id="LoginWithAjax_Password">
-                    <td class="password_label">
-                        <label><?php _e( 'Password' ) ?></label>
+                <tr class="lwa-password">
+                    <td class="lwa-password-label">
+                        <label><?php esc_html_e( 'Password','login-with-ajax' ) ?></label>
                     </td>
-                    <td class="password_input">
-                        <input type="password" name="pwd" id="lwa_user_pass" class="input" value="" />
+                    <td class="lwa-password-input">
+                        <input type="password" name="pwd" />
                     </td>
                 </tr>
                 <tr><td colspan="2"><?php do_action('login_form'); ?></td></tr>
-                <tr id="LoginWithAjax_Submit">
-                    <td id="LoginWithAjax_SubmitButton">
-                        <input type="submit" name="wp-submit" id="lwa_wp-submit" value="<?php _e('Log In'); ?>" tabindex="100" />
-                        <input type="hidden" name="redirect_to" value="http://<?php echo $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>" />
-                        <input type="hidden" name="testcookie" value="1" />
-                        <input type="hidden" name="lwa_profile_link" value="<?php echo $lwa_data['profile_link'] ?>" />
+                <tr class="lwa-submit">
+                    <td class="lwa-submit-button">
+                        <input type="submit" name="wp-submit" id="lwa_wp-submit" value="<?php esc_attr_e('Log In', 'login-with-ajax'); ?>" tabindex="100" />
+                        <input type="hidden" name="lwa_profile_link" value="<?php echo esc_attr($lwa_data['profile_link']); ?>" />
+                        <input type="hidden" name="login-with-ajax" value="login" />
                     </td>
-                    <td id="LoginWithAjax_Links">
-                        <input name="rememberme" type="checkbox" id="lwa_rememberme" value="forever" /> <label><?php _e( 'Remember Me' ) ?></label>
+                    <td class="lwa-submit-links">
+                        <input name="rememberme" type="checkbox" class="lwa-rememberme" value="forever" /> <label><?php esc_html_e( 'Remember Me','login-with-ajax' ) ?></label>
                         <br />
-                        <a id="LoginWithAjax_Links_Remember" href="<?php echo site_url('wp-login.php?action=lostpassword', 'login') ?>" title="<?php _e('Password Lost and Found') ?>"><?php _e('Lost your password?') ?></a>
-                        <?php
-                            //Signup Links
-                            if ( get_option('users_can_register') && $lwa_data['registration'] == '1' ) {
-                                echo "<br />";  
-                                if ( function_exists('bp_get_signup_page') ) { //Buddypress
-                                	$register_link = bp_get_signup_page();
-                                }elseif ( file_exists( ABSPATH."/wp-signup.php" ) ) { //MU + WP3
-                                    $register_link = site_url('wp-signup.php', 'login');
-                                } else {
-                                    $register_link = site_url('wp-login.php?action=register', 'login');
-                                }
-                                ?>
-                                <a href="<?php echo $register_link ?>" id="LoginWithAjax_Links_Register" rel="#LoginWithAjax_Register"><?php _e('Signup') ?></a>
-                                <?php
-                            }
-                        ?>
+						<?php if( !empty($lwa_data['remember']) ): ?>
+						<a class="lwa-links-remember" href="<?php echo esc_attr(LoginWithAjax::$url_remember); ?>" title="<?php esc_attr_e('Password Lost and Found','login-with-ajax') ?>"><?php esc_attr_e('Lost your password?','login-with-ajax') ?></a>
+						<?php endif; ?>
+                        <?php if ( get_option('users_can_register') && !empty($lwa_data['registration']) ) : ?>
+						<br />
+						<a href="<?php echo esc_attr(LoginWithAjax::$url_register); ?>" class="lwa-links-register lwa-links-modal"><?php esc_html_e('Register','login-with-ajax') ?></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </table>
         </form>
-        <form name="LoginWithAjax_Remember" id="LoginWithAjax_Remember" action="<?php echo $this->url_remember ?>" method="post" style="display:none;">
-            <table width='100%' cellspacing="0" cellpadding="0">
+        <?php if( !empty($lwa_data['remember']) ): ?>
+        <form class="lwa-remember" action="<?php echo esc_attr(LoginWithAjax::$url_remember) ?>" method="post" style="display:none;">
+        	<span class="lwa-status"></span>
+            <table>
                 <tr>
                     <td>
-                        <strong><?php echo __("Forgotten Password", 'login-with-ajax'); ?></strong>         
+                        <strong><?php esc_html_e("Forgotten Password", 'login-with-ajax'); ?></strong>         
                     </td>
                 </tr>
                 <tr>
-                    <td class="forgot-pass-email">  
+                    <td class="lwa-remember-email">  
                         <?php $msg = __("Enter username or email", 'login-with-ajax'); ?>
-                        <input type="text" name="user_login" id="lwa_user_remember" value="<?php echo $msg ?>" onfocus="if(this.value == '<?php echo $msg ?>'){this.value = '';}" onblur="if(this.value == ''){this.value = '<?php echo $msg ?>'}" />   
+                        <input type="text" name="user_login" class="lwa-user-remember" value="<?php echo esc_attr($msg); ?>" onfocus="if(this.value == '<?php echo esc_attr($msg); ?>'){this.value = '';}" onblur="if(this.value == ''){this.value = '<?php echo esc_attr($msg); ?>'}" />
+                        <?php do_action('lostpassword_form'); ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <input type="submit" value="<?php echo __("Get New Password", 'login-with-ajax'); ?>" />
-                          <a href="#" id="LoginWithAjax_Links_Remember_Cancel"><?php _e("Cancel"); ?></a>
-                        <input type="hidden" name="login-with-ajax" value="remember" />         
+                    <td class="lwa-remember-buttons">
+                        <input type="submit" value="<?php esc_attr_e("Get New Password", 'login-with-ajax'); ?>" class="lwa-button-remember" />
+                        <a href="#" class="lwa-links-remember-cancel"><?php esc_html_e("Cancel", 'login-with-ajax'); ?></a>
+                        <input type="hidden" name="login-with-ajax" value="remember" />
                     </td>
                 </tr>
             </table>
         </form>
-	</div>
-	<?php if( get_option('users_can_register') && $lwa_data['registration'] == '1' ): ?>
-	<div id="LoginWithAjax_Footer">
-		<div id="LoginWithAjax_Register" style="display:none;" class="default">
-			<h4 class="message register"><?php _e('Register For This Site') ?></h4>
-			<form name="registerform" id="registerform" action="<?php echo $this->url_register ?>" method="post">
-				<p>
-					<label><?php _e('Username') ?><br />
+        <?php endif; ?>
+		<?php if( get_option('users_can_register') && !empty($lwa_data['registration']) ): ?>
+		<div class="lwa-register lwa-register-default lwa-modal" style="display:none;">
+			<h4><?php esc_html_e('Register For This Site','login-with-ajax') ?></h4>
+			<p><em class="lwa-register-tip"><?php esc_html_e('A password will be e-mailed to you.','login-with-ajax') ?></em></p>
+			<form class="lwa-register-form" action="<?php echo esc_attr(LoginWithAjax::$url_register); ?>" method="post">
+				<span class="lwa-status"></span>
+				<p class="lwa-username">
+					<label><?php esc_html_e('Username','login-with-ajax') ?><br />
 					<input type="text" name="user_login" id="user_login" class="input" size="20" tabindex="10" /></label>
 				</p>
-				<p>
-					<label><?php _e('E-mail') ?><br />
+				<p class="lwa-email">
+					<label><?php esc_html_e('E-mail','login-with-ajax') ?><br />
 					<input type="text" name="user_email" id="user_email" class="input" size="25" tabindex="20" /></label>
 				</p>
 				<?php do_action('register_form'); ?>
-				<p id="reg_passmail"><?php _e('A password will be e-mailed to you.') ?></p>
-				<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Register'); ?>" tabindex="100" /></p>
-				<input type="hidden" name="lwa" value="1" />
+				<?php do_action('lwa_register_form'); ?>
+				<p class="submit">
+					<input type="submit" name="wp-submit" id="wp-submit" class="button-primary" value="<?php esc_attr_e('Register', 'login-with-ajax'); ?>" tabindex="100" />
+				</p>
+		        <input type="hidden" name="login-with-ajax" value="register" />
 			</form>
 		</div>
+		<?php endif; ?>
 	</div>
-	<script type="text/javascript">
-		jQuery(document).ready(function($) {
-			var triggers = $("#LoginWithAjax_Links_Register").overlay({
-				mask: { 
-					color: '#ebecff',
-					loadSpeed: 200,
-					opacity: 0.9
-				},
-				closeOnClick: true
-			});		
-		});
-	</script>
-	<?php endif; ?>
-<?php
-	if( $is_widget ){
-		echo $after_widget;
-	}
-?>
