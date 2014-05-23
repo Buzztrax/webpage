@@ -1,54 +1,53 @@
 @charset "utf-8";
-#LoginWithAjax { margin-bottom:10px; position:relative; font-size:1em; }
-#LoginWithAjax td { padding-top:7px; vertical-align:top; background-color:none; }
+#branding { z-index:9996; } /* a little naughty, twentyeleven fix */
+.lwa { margin-bottom:10px; }
+form.lwa-form, form.lwa-remember, div.lwa-register form { position:relative; }
+.lwa table { width:100% !important; margin:0px !important; border-spacing:0; border-collapse:collapse; }
+.lwa td,.lwa th { padding:0; border-spacing:0; } 
+.lwa td { padding-top:7px; vertical-align:top; background-color:none; }
 
 /*Logged out CSS*/
-#LoginWithAjax .password_label, #LoginWithAjax .username_label { padding-right:10px; vertical-align:middle; }
-#LoginWithAjax_Password input, #LoginWithAjax_Username input { width:97%; }
+.lwa .lwa-username-label, .lwa .lwa-password-label { padding-right:10px; vertical-align:middle; }
+.lwa-password input, .lwa-username input, .lwa-email input, .lwa-remember-email input { margin:0px; width:96%; padding-left:2%; padding-right:2%; }
 
-#LoginWithAjax_Loading { position:absolute; width:100%; height:100%; background:#FFFFFF url(loading.gif) 50% 50% no-repeat; left:0px; top:0px; opacity:0.8; filter:alpha(opacity=80)}
+.lwa-loading { position:absolute; width:100%; height:100%; background:#FFFFFF url(loading.gif) 50% 50% no-repeat; left:0px; top:0px; opacity:0.8; filter:alpha(opacity=80)}
 
-#LoginWithAjax_Status.invalid, #LoginWithAjax_Status.confirm { text-align:left; display:block; padding:3px; margin-bottom:8px; }
-#LoginWithAjax_Status.invalid { color:#990000; background:#F0D9D9; border:1px solid #E0B4B4; }
-#LoginWithAjax_Status.confirm { color:#009900; background:#D8FFB0; border:1px solid #AAFF71; }
+.lwa-status { margin:0px 0px 5px; padding:10px 10px; color:#333; border-radius:3px; display:none; }
+.lwa-status-invalid, .lwa-status-confirm { display:block !important; }
+.lwa-status-invalid { background-color:#FFEBE8; border:1px solid #C00; }
+.lwa-status-confirm { background-color:#f1fff0; border:1px solid #a8d144; }
 
 /*Logged In CSS*/
-#LoginWithAjax_Avatar { width:60px; padding-right:10px; }
+.lwa-avatar { width:60px; padding-right:10px; }
+.lwa-info { text-transform:lowercase; }
 
 /*Forgotten password*/
-#LoginWithAjax_Remember { margin-top:10px; display:none; }
-#LoginWithAjax_Remember p { padding: 0px 0px 3px 0px }
-#LoginWithAjax_Remember .forgot-pass-email input { width:97%; padding:2px; color:#666; }
+.lwa-remember { margin-top:10px; display:none; }
 
 /*Registration*/
-#LoginWithAjax #LoginWithAjax_Register { margin-top:10px; display:none; }
-#LoginWithAjax_Register_Status.invalid, #LoginWithAjax_Register_Status.confirm { text-align:left; display:block; padding:3px; margin-bottom:8px; }
-#LoginWithAjax_Register_Status.invalid { color:#990000; background:#F0D9D9; border:1px solid #E0B4B4; }
-#LoginWithAjax_Register_Status.confirm { color:#009900; background:#D8FFB0; border:1px solid #AAFF71; }
-#LoginWithAjax_Register input[type=text] { width:97%; padding:2px; color:#666; }
-
-/*Default Template*/
-#LoginWithAjax_Register.default { background-color:#fff; color:#333; display:none; width:350px; padding:15px; text-align:left;  border:2px solid #333; opacity:0.8; -moz-border-radius:6px; -webkit-border-radius:6px; -moz-box-shadow: 0 0 50px #ccc; -webkit-box-shadow: 0 0 50px #ccc; }
-#LoginWithAjax_Register.default h4 { font-size:16px; margin:0px; padding:0px; }
-#LoginWithAjax_Register form { overflow:auto; height:400px; }
-#LoginWithAjax_Register.default .close { background:url(close.png) 0px 0px no-repeat  !important; position:absolute; right:-15px; top:-15px; cursor:pointer; height:35px; width:35px; border:none; padding:0px; margin:0px; }
-#LoginWithAjax_Register.default #wp-submit { display:block; clear:both; }
-
-/*ie7-friendly*/
-#LoginWithAjax.ie7-friendly div { padding-top:7px; vertical-align:top; background-color:none; }
-#LoginWithAjax.ie7-friendly #LoginWithAjax_Register { margin-top:5px; display:none; }
-#LoginWithAjax.ie7-friendly #LoginWithAjax_Register p { padding: 0px 0px 3px 0px }
-
-/*inline-registration*/
-#LoginWithAjax.inline-registration #LoginWithAjax_Register { margin-top:5px; display:none; }
-#LoginWithAjax.inline-registration #LoginWithAjax_Register p { padding: 0px 0px 3px 0px }
+.lwa .lwa-register { margin-top:10px; display:none; }
 
 /*OpenID specific*/
-#LoginWithAjax_Register hr { display:block; }
-#LoginWithAjax_Register #openid_identifier { width:auto; }
+.lwa-register hr { display:block; }
+.lwa-register #openid_identifier { width:auto; }
+
+/* Modals CSS */
+.lwa-modal-bg { position: fixed; height: 100%; width: 100%; background: #000; background: rgba(0,0,0,.8); z-index: 100; display: none; top: 0; left: 0; }	
+.lwa-modal { visibility: hidden; top: 100px; left: 50%; margin-left: -240px; width: 400px; background: #fefefe; position: absolute; z-index: 101; padding: 30px 40px 34px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -moz-box-shadow: 0 0 10px rgba(0,0,0,.4); -webkit-box-shadow: 0 0 10px rgba(0,0,0,.4); -box-shadow: 0 0 10px rgba(0,0,0,.4); }
+.lwa-modal h4, .lwa-modal p { margin-bottom:10px; }
+.lwa-modal .lwa-modal-close { font-size: 30px; line-height: .5; position: absolute; top: 8px; right: 11px; color: #aaa; text-shadow: 0 -1px 1px rbga(0,0,0,.6); font-weight: bold; cursor: pointer; } 
+
+/* divs-only */
+.lwa-divs-only p { margin:8px 0px 5px !important; }
+.lwa-divs-only input[type="text"] { margin:5px 0px 10px; }
+.lwa-divs-only .lwa-submit-button, .lwa-divs-only .lwa-links { margin-top:5px; }
+.lwa-divs-only .lwa-form .lwa-submit-button { float:right; }
+.lwa-divs-only .lwa-remember, .lwa-divs-only .lwa-register { clear:both; }
 
 /*Modal Template*/
-#LoginWithAjax_Modal { background-color:#fff; color:#333;  width:350px; padding:15px; text-align:left;  border:2px solid #333; opacity:0.8; -moz-border-radius:6px; -webkit-border-radius:6px; -moz-box-shadow: 0 0 50px #ccc; -webkit-box-shadow: 0 0 50px #ccc; }
-#LoginWithAjax_Modal h4 { font-size:16px; margin:0px; padding:0px; }	
-#LoginWithAjax_Modal .close { background:url(default/close.png) 0px 0px no-repeat  !important; position:absolute; right:-15px; top:-15px; cursor:pointer; height:35px; width:35px; border:none; padding:0px; margin:0px; }
-#LoginWithAjax_Modal #wp-submit { display:block; clear:both; }
+/*
+.lwa-template--modal .lwa-modal-box { background-color:#fff; color:#333;  width:350px; padding:15px; text-align:left;  border:2px solid #333; opacity:0.8; -moz-border-radius:6px; -webkit-border-radius:6px; -moz-box-shadow: 0 0 50px #ccc; -webkit-box-shadow: 0 0 50px #ccc; }
+.lwa-template--modal .lwa-modal-box h4 { font-size:16px; margin:0px; padding:0px; }	
+.lwa-template--modal .lwa-modal-box .close { background:url(modal/close.png) 0px 0px no-repeat  !important; position:absolute; right:-15px; top:-15px; cursor:pointer; height:35px; width:35px; border:none; padding:0px; margin:0px; }
+.lwa-template--modal .lwa-modal-box #wp-submit { display:block; clear:both; }
+*/
